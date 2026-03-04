@@ -3,7 +3,8 @@ import { atom } from 'jotai';
 import { DateBounds, FilterMode, ILimits } from '../types';
 
 const DEFAULT_LOWER_LIMIT = 1;
-const DEFAULT_UPPER_LIMIT = 100;
+/** Large default so all messages are shown until user applies a custom range */
+const DEFAULT_UPPER_LIMIT = 999_999;
 
 const globalFilterModeAtom = atom<FilterMode>('index');
 
@@ -29,4 +30,6 @@ const datesAtom = atom<DateBounds>({
   end: new Date(),
 });
 
-export { globalFilterModeAtom, limitsAtom, datesAtom };
+const searchQueryAtom = atom('');
+
+export { globalFilterModeAtom, limitsAtom, datesAtom, searchQueryAtom };

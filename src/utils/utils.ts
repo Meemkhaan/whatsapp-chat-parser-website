@@ -2,6 +2,7 @@ import JSZip from 'jszip';
 import { parseString } from 'whatsapp-chat-parser';
 import { DateBounds, ExtractedFile, IndexedMessage } from '../types';
 import { UniqueIdGenerator } from './unique-id-generator';
+import { notifyError } from '../errorNotifier';
 
 const getMimeType = (fileName: string) => {
   if (/\.jpe?g$/.test(fileName)) return 'image/jpeg';
@@ -23,7 +24,7 @@ const getMimeType = (fileName: string) => {
 
 const showError = (message: string, err?: Error) => {
   console.error(err || message); // eslint-disable-line no-console
-  alert(message); // eslint-disable-line no-alert
+  notifyError(message);
 };
 
 const readChatFile = (zipData: JSZip) => {
@@ -66,8 +67,7 @@ const fileToText = (file: ExtractedFile) => {
   if (typeof file === 'string') return Promise.resolve(file);
 
   return readChatFile(file).catch((err: Error) => {
-    // eslint-disable-next-line no-alert
-    alert(err);
+    notifyError(err.message || String(err));
     return Promise.resolve('');
   });
 };
@@ -127,6 +127,19 @@ function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function filterMessagesBySearch(
+  messages: IndexedMessage[],
+  query: string,
+): IndexedMessage[] {
+  if (!query.trim()) return messages;
+  const q = query.trim().toLowerCase();
+  return messages.filter(
+    m =>
+      (m.author && m.author.toLowerCase().includes(q)) ||
+      m.message.toLowerCase().includes(q),
+  );
+}
+
 export {
   getMimeType,
   showError,
@@ -139,5 +152,6 @@ export {
   getISODateString,
   extractStartEndDatesFromMessages,
   filterMessagesByDate,
+  filterMessagesBySearch,
   capitalize,
 };

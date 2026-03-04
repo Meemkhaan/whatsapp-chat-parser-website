@@ -2,10 +2,26 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 import { whatsappThemeColor } from './utils/colors';
 
+const SkipLink = styled.a`
+  position: absolute;
+  top: -100px;
+  left: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #333;
+  color: white;
+  z-index: 1000;
+  transition: top 0.2s;
+
+  &:focus {
+    top: 0.5rem;
+  }
+`;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  position: relative;
 `;
 
 const Header = styled.header`
@@ -89,4 +105,4 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
-export { GlobalStyles, Container, Header };
+export { GlobalStyles, Container, Header, SkipLink };

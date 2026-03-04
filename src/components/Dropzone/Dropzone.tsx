@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
+import { t } from '../../i18n';
 import * as S from './style';
 
 const preventDefaults = (e: React.DragEvent<HTMLFormElement>) => {
@@ -61,9 +62,8 @@ function Dropzone({ id, onFileUpload }: IDropzone) {
       />
       <S.Label htmlFor={id} $isHighlighted={isHighlighted}>
         <S.P>
-          Click here to upload a file or drag and drop it onto the dashed region
-          (supported formats: <S.Extension>txt</S.Extension>,{' '}
-          <S.Extension>zip</S.Extension>)
+          {t.dropzoneLabel} ({t.dropzoneFormats}{' '}
+          <S.Extension>{t.txt}</S.Extension>, <S.Extension>{t.zip}</S.Extension>)
         </S.P>
       </S.Label>
     </form>

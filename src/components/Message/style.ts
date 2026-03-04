@@ -84,8 +84,12 @@ const Index = styled.div<{ $isSystem: boolean; $isActiveUser: boolean }>`
 const Bubble = styled.div<{ $isSystem: boolean; $isActiveUser: boolean }>`
   ${messageBaseStyle}
 
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
   position: relative;
   background-color: white;
+  max-width: 65%;
   ${props =>
     props.$isSystem &&
     css`
@@ -99,7 +103,7 @@ const Bubble = styled.div<{ $isSystem: boolean; $isActiveUser: boolean }>`
     `}
 
   @media (max-width: 699px) {
-    flex-direction: column;
+    max-width: 85%;
   }
 
   @media (min-width: 700px) {
@@ -144,19 +148,32 @@ const Message = styled.div`
   ${overflowBreakWord}
 
   white-space: pre-wrap;
-`;
 
-const Date = styled.time`
-  flex: 0 0 auto;
-  align-self: flex-end;
-  margin-left: 1rem;
-  white-space: nowrap;
-  font-size: 75%;
-  opacity: 0.6;
+  mark {
+    background: rgba(255, 235, 59, 0.6);
+    border-radius: 2px;
+    padding: 0 2px;
+  }
 
-  @media (max-width: 699px) {
-    margin-top: 0.25rem;
+  @media (prefers-color-scheme: dark) {
+    mark {
+      background: rgba(255, 193, 7, 0.5);
+    }
   }
 `;
 
-export { Item, Bubble, Index, Wrapper, Author, Message, Date };
+const DateRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.15rem;
+  min-height: 1em;
+`;
+
+const Date = styled.time`
+  white-space: nowrap;
+  font-size: 11px;
+  opacity: 0.7;
+  align-self: flex-end;
+`;
+
+export { Item, Bubble, Index, Wrapper, Author, Message, DateRow, Date };

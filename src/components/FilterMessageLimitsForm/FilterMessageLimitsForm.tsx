@@ -1,3 +1,4 @@
+import { t } from '../../i18n';
 import * as S from '../Sidebar/style';
 
 import { ILimits } from '../../types';
@@ -14,9 +15,9 @@ function FilterMessageLimitsForm({
   return (
     <S.Form onSubmit={setMessageLimits}>
       <S.Fieldset>
-        <legend>Messages limit</legend>
+        <legend>{t.messagesLimit}</legend>
         <S.Field>
-          <S.Label htmlFor="lower-limit">Start</S.Label>
+          <S.Label htmlFor="lower-limit">{t.start}</S.Label>
           <S.Input
             id="lower-limit"
             name="lowerLimit"
@@ -26,7 +27,7 @@ function FilterMessageLimitsForm({
           />
         </S.Field>
         <S.Field>
-          <S.Label htmlFor="upper-limit">End</S.Label>
+          <S.Label htmlFor="upper-limit">{t.end}</S.Label>
           <S.Input
             id="upper-limit"
             name="upperLimit"
@@ -36,11 +37,8 @@ function FilterMessageLimitsForm({
           />
         </S.Field>
         <S.Field>
-          <S.Submit type="submit" value="Apply" />
-          <S.InputDescription>
-            A high delta may freeze the page for a while, change this with
-            caution
-          </S.InputDescription>
+          <S.Submit type="submit" value={t.apply} />
+          <S.InputDescription>{t.messagesLimitCaution}</S.InputDescription>
         </S.Field>
       </S.Fieldset>
     </S.Form>

@@ -1,4 +1,5 @@
 import { DateBounds } from '../../types';
+import { t } from '../../i18n';
 import { getISODateString } from '../../utils/utils';
 
 import * as S from '../Sidebar/style';
@@ -15,9 +16,9 @@ function FilterMessageDatesForm({
   return (
     <S.Form onSubmit={setMessagesByDate}>
       <S.Fieldset>
-        <legend>Messages date window</legend>
+        <legend>{t.messagesDateWindow}</legend>
         <S.Field>
-          <S.Label htmlFor="start-date">Start</S.Label>
+          <S.Label htmlFor="start-date">{t.start}</S.Label>
           <S.Input
             id="start-date"
             name="startDate"
@@ -28,7 +29,7 @@ function FilterMessageDatesForm({
           />
         </S.Field>
         <S.Field>
-          <S.Label htmlFor="end-date">End</S.Label>
+          <S.Label htmlFor="end-date">{t.end}</S.Label>
           <S.Input
             id="end-date"
             name="endDate"
@@ -39,11 +40,8 @@ function FilterMessageDatesForm({
           />
         </S.Field>
         <S.Field>
-          <S.Submit type="submit" value="Apply" />
-          <S.InputDescription>
-            A high delta may freeze the page for a while, change this with
-            caution
-          </S.InputDescription>
+          <S.Submit type="submit" value={t.apply} />
+          <S.InputDescription>{t.dateRangeCaution}</S.InputDescription>
         </S.Field>
       </S.Fieldset>
     </S.Form>

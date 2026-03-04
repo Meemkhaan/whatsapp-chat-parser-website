@@ -6,7 +6,9 @@ import { rawFileAtom, messagesAtom } from './stores/global';
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
 import Sidebar from './components/Sidebar/Sidebar';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import * as S from './style';
+import { t } from './i18n';
 
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 
@@ -47,19 +49,23 @@ function App() {
     };
   }, []);
 
+  const hasMessages = Array.isArray(messages) && messages.length > 0;
+
   return (
     <>
       <S.GlobalStyles />
+      <S.SkipLink href="#main-content">{t.skipToMessages}</S.SkipLink>
       <S.Container>
         <S.Header>
           <Dropzone onFileUpload={processFile} id="dropzone" />
-          <span>OR</span>
+          <span>{t.or}</span>
           <a href={exampleChat} download>
-            Download example chat
+            {t.downloadExample}
           </a>
         </S.Header>
         <MessageViewer />
-        {messages.length > 0 && <Sidebar />}
+        {hasMessages && <Sidebar />}
+        {hasMessages && <ScrollToTop />}
       </S.Container>
     </>
   );
