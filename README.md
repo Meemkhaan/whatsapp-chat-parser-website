@@ -18,7 +18,7 @@ The app runs locally and **no logs are sent or stored anywhere**.
 - **Virtual list** – Smooth scrolling for long chats.
 - **Accessibility** – Skip link, keyboard support, focus trap in sidebar.
 
-The website is available at [whatsapp-chat-parser.netlify.app](https://whatsapp-chat-parser.netlify.app/). This fork can be deployed to [Vercel](https://vercel.com) using the included `vercel.json`.
+**Live demo:** [Open app](https://whatsapp-chat-parser.vercel.app) · Original: [whatsapp-chat-parser.netlify.app](https://whatsapp-chat-parser.netlify.app/)
 
 ## How to run locally
 
