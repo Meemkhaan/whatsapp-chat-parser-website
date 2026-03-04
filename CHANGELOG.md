@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.0] - 2025-03-04
+
+### Added
+
+- **Search Messages** – Search by author or message text with highlighted matches; **Jump to date** calendar to view messages from a specific day (WhatsApp-style)
+- **Who are you?** – Prominent prompt to select your name so your messages appear on the right; choice is remembered in localStorage
+- **Media viewer** – Click images or videos to open in a full-screen lightbox; close with Escape or clicking outside
+- **Improved audio** – Audio attachments use `preload="metadata"` and a styled container; accessible labels
+- **Toast notifications** – Errors and file-load issues show in-app toasts instead of browser alerts
+- **Export visible messages** – Download the currently filtered message list as a `.txt` file
+- **Clear filters** – One-click reset to show all messages and clear search/date filters
+- **Scroll to top** – Floating button when scrolled down for long chats
+- **Virtual list** – Long chats use react-virtuoso for better performance (window scroll)
+- **Accessibility** – Skip-to-messages link, aria-labels on menu/overlay, focus trap in sidebar
+- **i18n** – Centralized UI strings in `src/i18n.ts` for easier editing and future localization
+- **Vercel** – `vercel.json` with `outputDirectory: build` for deployment
+
+### Changed
+
+- **Show all messages by default** – Removed the previous 1–100 message limit; full chat loads until you apply a filter
+- **Timestamp layout** – Date/time appears on its own line below the message bubble (WhatsApp-style), with full date and time
+- **Sidebar order** – “Who are you?” and “Search Messages” appear first; filter options and actions follow
+
+[1.12.0]: https://github.com/Meemkhaan/whatsapp-chat-parser-website/compare/1.11.1...1.12.0
+
 ## [1.11.1] - 2024-10-26
 
 ### Changed
