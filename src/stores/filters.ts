@@ -32,4 +32,13 @@ const datesAtom = atom<DateBounds>({
 
 const searchQueryAtom = atom('');
 
-export { globalFilterModeAtom, limitsAtom, datesAtom, searchQueryAtom };
+/** When set, MessageViewer scrolls to the message with this index (in full list) then clears */
+const scrollToMessageIndexAtom = atom<number | null>(null);
+
+export {
+  globalFilterModeAtom,
+  limitsAtom,
+  datesAtom,
+  searchQueryAtom,
+  scrollToMessageIndexAtom,
+};

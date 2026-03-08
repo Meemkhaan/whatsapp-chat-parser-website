@@ -1,8 +1,9 @@
-import React, { useMemo, useEffect, useCallback } from 'react';
-import { useAtom, useAtomValue } from 'jotai';
-import { Virtuoso } from 'react-virtuoso';
+import React, { useMemo, useEffect, useCallback, useRef } from 'react';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 
 import Message from '../Message/Message';
+import SearchResultsPanel from '../SearchResultsPanel/SearchResultsPanel';
 import * as S from './style';
 import { t } from '../../i18n';
 import {
@@ -17,6 +18,7 @@ import {
   globalFilterModeAtom,
   limitsAtom,
   searchQueryAtom,
+  scrollToMessageIndexAtom,
 } from '../../stores/filters';
 import {
   filterMessagesByDate,
@@ -31,6 +33,10 @@ function MessageViewer() {
   const messages = useAtomValue(messagesAtom);
   const filterMode = useAtomValue(globalFilterModeAtom);
   const searchQuery = useAtomValue(searchQueryAtom);
+  const scrollToMessageIndex = useAtomValue(scrollToMessageIndexAtom);
+  const setScrollToMessageIndex = useSetAtom(scrollToMessageIndexAtom);
+  const setSearchQuery = useSetAtom(searchQueryAtom);
+  const virtuosoRef = useRef<VirtuosoHandle>(null);
   const { start: startDate, end: endDate } = useAtomValue(datesAtom);
   const endDatePlusOne = new Date(endDate);
   endDatePlusOne.setDate(endDatePlusOne.getDate() + 1);
@@ -98,8 +104,47 @@ function MessageViewer() {
     }
   }, [activeUser, participants]);
 
+  // When user clicks a search result: scroll to that message in the full conversation
+  useEffect(() => {
+    if (scrollToMessageIndex == null) return;
+    const position = rangeFiltered.findIndex(
+      (m) => m.index === scrollToMessageIndex,
+    );
+    if (position < 0) {
+      setScrollToMessageIndex(null);
+      return;
+    }
+    const id = requestAnimationFrame(() => {
+      virtuosoRef.current?.scrollToIndex({
+        index: position,
+        behavior: 'smooth',
+      });
+      setScrollToMessageIndex(null);
+    });
+    return () => cancelAnimationFrame(id);
+  }, [
+    scrollToMessageIndex,
+    rangeFiltered,
+    setScrollToMessageIndex,
+  ]);
+
+  const handleSearchResultSelect = useCallback(
+    (message: { index: number }) => {
+      setScrollToMessageIndex(message.index);
+      setSearchQuery('');
+    },
+    [setScrollToMessageIndex, setSearchQuery],
+  );
+
   return (
     <S.Container id="main-content" tabIndex={-1}>
+      {messages.length > 0 && isSearchActive && (
+        <SearchResultsPanel
+          results={renderedMessages}
+          query={searchQuery}
+          onSelectMessage={handleSearchResultSelect}
+        />
+      )}
       {messages.length > 0 && (
         <S.P>
           <S.Info>
@@ -130,6 +175,7 @@ function MessageViewer() {
 
       <S.List as="div">
         <Virtuoso
+          ref={virtuosoRef}
           useWindowScroll
           totalCount={renderedMessages.length}
           itemContent={itemContent}

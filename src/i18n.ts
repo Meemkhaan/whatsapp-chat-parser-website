@@ -61,6 +61,9 @@ export const t = {
     `Showing messages from ${start} to ${end}`,
   showingSearch: (n: number, query: string) =>
     `${n} messages matching "${query}"`,
+  searchResults: 'Search results',
+  searchResultShowInChat: 'Show in conversation',
+  clickToShowInChat: 'Click to show this message in full conversation',
 
   // Credits
   madeBy: 'Made by',
